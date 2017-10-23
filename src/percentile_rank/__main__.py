@@ -6,7 +6,7 @@ file_types = ['csv', 'json', 'yaml', 'auto']
 
 def parse_file_types(file_type):
 
-    if file_type.lower() not in types:
+    if file_type.lower() not in file_types:
         msg = 'File type "%s" not supported' % file_type
         raise argparse.ArgumentTypeError(msg)
 
