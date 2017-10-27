@@ -1,12 +1,10 @@
 import argparse
-
-
-file_types = ['csv', 'json', 'yaml', 'auto']
+from rank_calculator import RankCalculator
+from file_handler import FileHandler
 
 
 def parse_file_types(file_type):
-
-    if file_type.lower() not in file_types:
+    if file_type.lower() not in FileHandler.FILE_TYPES:
         msg = 'File type "%s" not supported' % file_type
         raise argparse.ArgumentTypeError(msg)
 
@@ -16,16 +14,16 @@ def parse_file_types(file_type):
 def main():
     parser = argparse.ArgumentParser(description='Calculate percentile rank')
     parser.add_argument(
-        'input',
+        'input', type=argparse.FileType('r'),
         help='input file containing data to parse')
 
     parser.add_argument(
-        'output',
+        'output', type=argparse.FileType('w'),
         help='output file to write data to')
 
     parser.add_argument(
         '-t', default='auto', type=parse_file_types,
-        choices=file_types, metavar="TYPE",
+        choices=FileHandler.FILE_TYPES, metavar="TYPE",
         help='input file type')
 
     parser.add_argument(
@@ -41,6 +39,12 @@ def main():
         help='index/key to hold the percentile rank to when writing output')
 
     args = parser.parse_args()
+
+    rank_calculator = RankCalculator()
+    rank_calculator.calculate()
+
+    file_handler = FileHandler(args.input, args.output, args.t)
+    file_handler.write()
 
 
 if __name__ == '__main__':
