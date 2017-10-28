@@ -56,7 +56,9 @@ class FileHandler(object):
         import json
         return {
             'read': lambda file: json.load(file),
-            'write': lambda data, file: json.dump(data, file)
+            'write': lambda data, file: json.dump(data, file,
+                                                  sort_keys=True, indent=4,
+                                                  separators=(',', ': '))
         }
 
     def yamlHandler(self):
