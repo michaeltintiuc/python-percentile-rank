@@ -7,8 +7,9 @@ def init(args):
     rank_calculator = RankCalculator()
     rank_calculator.calculate()
 
-    file_handler = FileHandler.make(args.input, args.output, args.file_type)
-    file_handler.exportFile(args.skip_index)
+    file_handler = FileHandler(args.input, args.output, args.file_type)
+    file_handler.readDataFromFile()
+    file_handler.writeDatatoFile(args.skip_index)
 
 
 def main():
