@@ -12,7 +12,7 @@ class FileHandler(object):
     input_file = None
     output_file = None
     file_type = ""
-    data = ""
+    data = []
 
     def __init__(self, input_file, output_file, file_type):
         self.input_file = input_file
@@ -29,10 +29,10 @@ class FileHandler(object):
 
         self.type_handler['write'](self.data, self.output_file)
 
-    def skipIndex(self, key):
+    def skipIndex(self, skip_index):
         for item in self.data:
             try:
-                del item[int(key) if key.isdigit() else key]
+                del item[skip_index]
             except (KeyError, TypeError):
                 pass
 

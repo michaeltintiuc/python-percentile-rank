@@ -1,15 +1,19 @@
 import argparse
-from rank_calculator import RankCalculator
+# from rank_calculator import RankCalculator
 from file_handler import FileHandler
 
 
 def init(args):
-    rank_calculator = RankCalculator()
-    rank_calculator.calculate()
+    # rank_calculator = RankCalculator()
+    # rank_calculator.calculate()
 
     file_handler = FileHandler(args.input, args.output, args.file_type)
     file_handler.readDataFromFile()
     file_handler.writeDatatoFile(args.skip_index)
+
+
+def parseIndex(value):
+    return int(value) if value.isdigit() else value
 
 
 def main():
@@ -29,14 +33,17 @@ def main():
 
     parser.add_argument(
         '-i', default='0', metavar="INDEX", dest="data_index",
+        type=parseIndex,
         help='index/key containing the values to work on')
 
     parser.add_argument(
         '-s', default=None, metavar="SKIP", dest="skip_index",
+        type=parseIndex,
         help='index(es)/key(s) to skip when writing output')
 
     parser.add_argument(
         '-r', default='percentile_rank', dest="rank_index", metavar="RANK",
+        type=parseIndex,
         help='index/key to hold the percentile rank to when writing output')
 
     init(parser.parse_args())
