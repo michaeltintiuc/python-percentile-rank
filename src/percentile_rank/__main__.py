@@ -1,14 +1,15 @@
 import argparse
-# from rank_calculator import RankCalculator
+from rank_calculator import RankCalculator
 from file_handler import FileHandler
 
 
 def init(args):
-    # rank_calculator = RankCalculator()
-    # rank_calculator.calculate()
-
     file_handler = FileHandler(args.input, args.output, args.file_type)
     file_handler.readDataFromFile()
+
+    file_handler.data = RankCalculator.calculate(
+        file_handler.data, args.data_index, args.rank_index)
+
     file_handler.writeDatatoFile(args.skip_index)
 
 
