@@ -8,6 +8,10 @@ class RankCalculator():
 
     @staticmethod
     def flipUniqueList(list):
+        """
+        Parse passed list
+        Return a dict of unique values
+        """
         dict = {}
         for i, v in list.iteritems():
             if v not in dict:
@@ -16,24 +20,20 @@ class RankCalculator():
 
     @staticmethod
     def calculate(data, index, key):
-        # Sort data in ascending order
+        """
+        Sort data in ascending order
+        Generate a list of values, cast to same type
+        Calculate scores less than the score of interest
+        """
         data = sorted(data, key=lambda item: item[index])
-
-        # Generate a list of values and cast to same type
         values = {i: float(v[index]) for i, v in enumerate(data)}
-
-        # Number of examinees in the sample
-        count = len(values)
-
-        # List to use when checking scores less than the score of interest
-        count_less = RankCalculator.flipUniqueList(values)
-
-        # List to use when checking frequency of the score of interest
+        examinees = len(values)
         count_values = Counter(values.values())
+        count_less = RankCalculator.flipUniqueList(values)
 
         for i, v in values.iteritems():
             freq = count_values[v]
-            rank = ((count_less[v] + 0.5 * freq) / count) * 100
+            rank = ((count_less[v] + 0.5 * freq) / examinees) * 100
 
             if type(data[i]) is list:
                 data[i].append(rank)

@@ -4,6 +4,11 @@ from file_handler import FileHandler
 
 
 def init(args):
+    """
+    Create the file handler
+    Do data crunching
+    Write output
+    """
     file_handler = FileHandler(args.input, args.output, args.file_type)
     file_handler.readDataFromFile()
 
@@ -14,10 +19,16 @@ def init(args):
 
 
 def parseIndex(value):
+    """
+    Parse integers
+    """
     return int(value) if value.isdigit() else value
 
 
 def main():
+    """
+    Parse params and init the application
+    """
     parser = argparse.ArgumentParser(description='Calculate percentile rank')
     parser.add_argument(
         'input', type=argparse.FileType('r'),
